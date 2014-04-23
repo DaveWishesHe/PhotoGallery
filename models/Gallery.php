@@ -20,7 +20,7 @@
 
 				if (in_array($extenstion, array("jpg", "jpeg", "png", "gif")))
 				{
-					$images[] = $file;
+					$images[] = $path . $file;
 				}
 			}
 
