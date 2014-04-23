@@ -8,7 +8,7 @@
 			$this->supported = array("jpg" => "imagecreatefromjpeg", "jpeg" => "imagecreatefromjpeg", "png" => "imagecreatefrompng");
 		}
 
-		public function resize($path, $width = THUMB_X, $height = THUMB_Y, $crop = true)
+		public function resize($path, $width = THUMB_WIDTH, $height = THUMB_HEIGHT, $crop = true)
 		{
 			$parts = explode(".", $path);
 			$ext = end($parts);
