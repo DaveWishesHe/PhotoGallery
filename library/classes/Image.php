@@ -18,7 +18,7 @@
 			return $this->resize($path, $width, $height, $crop) === true ? $this->src : "";
 		}
 
-		public function resize($path, $width, $height, $crop)
+		private function resize($path, $width, $height, $crop)
 		{
 			$parts = explode(".", $path);
 			$ext = end($parts);
