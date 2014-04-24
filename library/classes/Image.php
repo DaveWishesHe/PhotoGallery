@@ -8,7 +8,16 @@
 			$this->supported = array("jpg" => "imagecreatefromjpeg", "jpeg" => "imagecreatefromjpeg", "png" => "imagecreatefrompng");
 		}
 
-		public function resize($path, $width = THUMB_WIDTH, $height = THUMB_HEIGHT, $crop = true)
+		public function load($path, $width = THUMB_WIDTH, $height = THUMB_HEIGHT, $crop = true)
+		{
+			if ($this->checkCache($path, $width, $height) === true)
+			{
+				return $this->src;
+			}
+
+			return $this->resize($path, $width, $height, $crop) === true ? $this->src : "";
+		}
+
 		public function resize($path, $width, $height, $crop)
 		{
 			$parts = explode(".", $path);
@@ -46,6 +55,7 @@
 			imagecopyresampled($target, $source, 0, 0, 0, 0, $width, $height, $oldWidth, $oldHeight);
 			return $this->cache($target, $path, $width, $height, $ext);
 		}
+
 		private function cache($image, $path, $width, $height, $ext)
 		{
 			$parts = explode("/", $path);
