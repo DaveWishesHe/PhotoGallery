@@ -9,6 +9,7 @@
 		}
 
 		public function resize($path, $width = THUMB_WIDTH, $height = THUMB_HEIGHT, $crop = true)
+		public function resize($path, $width, $height, $crop)
 		{
 			$parts = explode(".", $path);
 			$ext = end($parts);
@@ -43,8 +44,8 @@
 			$target = imagecreatetruecolor($width, $height);
 
 			imagecopyresampled($target, $source, 0, 0, 0, 0, $width, $height, $oldWidth, $oldHeight);
-			imagejpeg($target, ROOT_SERVER . "cache/tester.jpg", 100);
-			return $target;
+			return $this->cache($target, $path, $width, $height, $ext);
+		}
 		private function cache($image, $path, $width, $height, $ext)
 		{
 			$parts = explode("/", $path);
