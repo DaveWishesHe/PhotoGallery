@@ -45,6 +45,45 @@
 			imagecopyresampled($target, $source, 0, 0, 0, 0, $width, $height, $oldWidth, $oldHeight);
 			imagejpeg($target, ROOT_SERVER . "cache/tester.jpg", 100);
 			return $target;
+		private function cache($image, $path, $width, $height, $ext)
+		{
+			$parts = explode("/", $path);
+			$filename = $this->getCacheName(end($parts), $width, $height);
+			$this->src = $filename;
+
+			switch ($ext)
+			{
+				case "jpg":
+				case "jpeg":
+					return imagejpeg($image, $filename, 100);
+					break;
+				case "png":
+					return imagepng($image, $filename, 0);
+					break;
+				default:
+					return false;
+					break;
+			}
+		}
+
+		private function checkCache($path, $width, $height)
+		{
+			$parts = explode("/", $path);
+			$filename = $this->getCacheName(end($parts), $width, $height);
+
+			// TODO: Cache expiry. Currently a cached image lives forever (perhaps not a bad thing, but would be nice to have options)
+			if (file_exists($filename))
+			{
+				$this->src = $filename;
+				return true;
+			}
+
+			return false;
+		}
+
+		private function getCacheName($filename, $width, $height)
+		{
+			return ROOT_CACHE . $width . "x" . $height . "_" . $filename;
 		}
 	}
 
